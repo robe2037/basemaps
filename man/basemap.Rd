@@ -23,6 +23,7 @@ basemap(
   map_dir = NULL,
   class = "plot",
   force = FALSE,
+  high_res = FALSE,
   ...,
   verbose = TRUE
 )
@@ -163,6 +164,9 @@ basemap_mapview(
 \item{class}{character, output class, either either \code{plot} (default), \code{magick}, \code{png}, \code{geotif} or if suggested packages are installed, \code{terra}, \code{raster}, \code{stars}, \code{ggplot}, \code{gglayer} or \code{mapview}.}
 
 \item{force}{logical, whether to force download over cached files or not. Default is \code{FALSE}.}
+
+\item{high_res}{logical, whether to retrieve high resolution (512 x 512 px)
+tiles. Note that not all tile providers provide high resolution tiles.}
 
 \item{...}{additional arguments, including
 \itemize{

@@ -10,6 +10,8 @@
 #' @param map_dir character, cache directory where downloaded basemap tiles will be stored. By default, a temporary directory is used, which is destroyed when the session is terminated.
 #' @param class character, output class, either either \code{plot} (default), \code{magick}, \code{png}, \code{geotif} or if suggested packages are installed, \code{terra}, \code{raster}, \code{stars}, \code{ggplot}, \code{gglayer} or \code{mapview}.
 #' @param force logical, whether to force download over cached files or not. Default is \code{FALSE}.
+#' @param high_res logical, whether to retrieve high resolution (512 x 512 px)
+#'   tiles. Note that not all tile providers provide high resolution tiles.
 #' @param ... additional arguments, including
 #' \itemize{
 #'    \item \code{browse}, logical, for \code{class = "png"} and interactive sessions only. Whether to open the png file in the system's default PNG viewer or not. Default is \code{TRUE}.
@@ -91,7 +93,7 @@
 #' @export
 #' @name basemap
 basemap <- function(ext = NULL, map_service = NULL, map_type = NULL, map_res = NULL, map_token = NULL,
-                    map_dir = NULL, class = "plot", force = FALSE, ..., verbose = TRUE){
+                    map_dir = NULL, class = "plot", force = FALSE, high_res = FALSE, ..., verbose = TRUE){
   
   ## checks
   if(inherits(verbose, "logical")) options(basemaps.verbose = verbose)
@@ -139,7 +141,7 @@ basemap <- function(ext = NULL, map_service = NULL, map_type = NULL, map_res = N
   
   ## get map
   out(paste0("Loading basemap '", map_type, "' from map service '", map_service, "'..."))
-  map_file <- .get_map(ext, map_service, map_type, map_token, map_dir, map_res, force, class, ...)
+  map_file <- .get_map(ext, map_service, map_type, map_token, map_dir, map_res, force, class, high_res, ...)
   
   # return file if needed
   if("geotif" %in% class) return(map_file)
