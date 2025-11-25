@@ -79,6 +79,7 @@ reset_defaults <- function(){
 #' @param auth_error_code numeric, http error code the endpoint to add uses if authentification failed (defaults to 401)
 #' @param url_website character, optional, website URL for the service to add the user is directed to for registering (defaults to \code{NA}).
 #' @param file character, file name ending on ".csv" that the map types table is saved to or loaded from.
+#' @param scale character, string used to obtain high-resolution tiles from the map provider, if available. For many map providers this is `"@2x"`. If high-resolution tiles are not avaiable, leave `NA`.
 #' 
 #' @return A character vector of supported map types
 #' 
@@ -160,7 +161,7 @@ get_maptypes <- function(map_service = NULL, as_df = FALSE, url_cols = FALSE){
 #' @rdname maptypes
 #' @export
 add_maptypes <- function(map_service, map_type, url_endpoint, url_xy = "xy", url_file_format = ".png", 
-                         url_map_token = as.character(NA), auth_error_code = 401, url_website = as.character(NA)){
+                         url_map_token = as.character(NA), auth_error_code = 401, url_website = as.character(NA), scale = NA){
   
   # checks
   if(!is.character(map_service)) out("Argument 'map_service' must be a character.", type = 3)
@@ -199,7 +200,8 @@ add_maptypes <- function(map_service, map_type, url_endpoint, url_xy = "xy", url
       url_file_format = url_file_format[i],
       url_map_token = url_map_token[i],
       auth_error_code = auth_error_code[i],
-      url_website = url_website[i]
+      url_website = url_website[i],
+      scale = scale[i]
     )
   }))
   
