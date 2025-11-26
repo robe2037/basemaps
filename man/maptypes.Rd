@@ -35,7 +35,8 @@ add_maptypes(
   url_file_format = ".png",
   url_map_token = as.character(NA),
   auth_error_code = 401,
-  url_website = as.character(NA)
+  url_website = as.character(NA),
+  scale = NA
 )
 
 save_maptypes(file)
@@ -66,6 +67,8 @@ load_maptypes(file)
 \item{auth_error_code}{numeric, http error code the endpoint to add uses if authentification failed (defaults to 401)}
 
 \item{url_website}{character, optional, website URL for the service to add the user is directed to for registering (defaults to \code{NA}).}
+
+\item{scale}{character, string used to obtain high-resolution tiles from the map provider, if available. For many map providers this is `"@2x"`. If high-resolution tiles are not avaiable, leave `NA`.}
 
 \item{file}{character, file name ending on ".csv" that the map types table is saved to or loaded from.}
 }

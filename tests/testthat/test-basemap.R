@@ -3,6 +3,7 @@ context("basemap")
 
 test_that("basemap()", {
   # test debug
+  basemaps::flush_cache() # Debug client does not trigger if tiles already cached
   expect_message(basemap(ext, debug_client = T, verbose = T, class = "png"))
   
   # test nominal
