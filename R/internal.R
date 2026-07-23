@@ -518,7 +518,7 @@ out <- function(input, type = 1, ll = NULL, msg = FALSE, sign = "", verbose = ge
     c("mapbox", "satellite", "https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/", "xy", "", "?access_token=", "401", "https://www.mapbox.com/"),
     c("mapbox", "hybrid", "https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/", "xy", "", "?access_token=", "401", "https://www.mapbox.com/"),
     c("mapbox", "terrain", "https://api.mapbox.com/v4/mapbox.terrain-rgb/", "xy", ".png", "?access_token=", "401", "https://www.mapbox.com/"),
-    c("esri", "natgeo_world_map", "https://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer/tile/", "xy", ".png", NA, "401", NA),
+    c("esri", "natgeo_world_map", "https://services.arcgisonline.com/arcgis/rest/services/NatGeo_World_Map/MapServer/tile/", "yx", ".png", NA, "401", NA),
     c("esri", "usa_topo_maps", "https://services.arcgisonline.com/arcgis/rest/services/USA_Topo_Maps/MapServer/tile/", "yx", ".png", NA, "401", NA),
     c("esri", "world_imagery", "https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/", "yx", ".png", NA, "401", NA),
     c("esri", "world_physical_map", "https://services.arcgisonline.com/arcgis/rest/services/World_Physical_Map/MapServer/tile/", "yx", ".png", NA, "401", NA),
