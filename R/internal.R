@@ -117,7 +117,7 @@ out <- function(input, type = 1, ll = NULL, msg = FALSE, sign = "", verbose = ge
 #' get map
 #' @importFrom slippymath bbox_to_tile_grid tile_bbox
 #' @importFrom magick image_read image_write image_convert image_info
-#' @importFrom httr http_error GET write_disk stop_for_status
+#' @importFrom httr http_error GET write_disk stop_for_status config
 #' @importFrom sf st_transform st_bbox st_as_sfc st_crs st_crs<- st_crop gdal_utils
 #' @importFrom terra rast ext ext<- mosaic project crop writeRaster extend merge RGB<- as.raster
 #' @importFrom grDevices col2rgb
@@ -185,7 +185,7 @@ out <- function(input, type = 1, ll = NULL, msg = FALSE, sign = "", verbose = ge
           
           if(isTRUE(debug_client)) out(paste0("[DEBUG CLIENT] ", url, " ---> ", file), msg = T)
           
-          if(isTRUE(http_error(url))){
+          if(isTRUE(http_error(url, config(http_version = endpoint$http_version)))){
             resp <- GET(url)
             status <- resp$status_code
             if(status == endpoint$auth_error_code) out("Authentification failed. Is your map_token correct?", type = 3)
@@ -193,7 +193,7 @@ out <- function(input, type = 1, ll = NULL, msg = FALSE, sign = "", verbose = ge
           if(!file.exists(file)){
             #tryCatch(curl_download(url = url, destfile = file), error = function(e) out(paste0("Tile download failed: ", e$message), type = 3))
             tryCatch({
-              result <- GET(url = url,  write_disk(file, overwrite=TRUE))
+              result <- GET(url = url,  write_disk(file, overwrite=TRUE), config(http_version = endpoint$http_version))
               httr::stop_for_status(result)
             }, error = function(e) out(paste0("Tile download failed: ", e$message), type = 3))
           }#utils::download.file(url = url, destfile = file, quiet = T) 
@@ -561,6 +561,8 @@ out <- function(input, type = 1, ll = NULL, msg = FALSE, sign = "", verbose = ge
     c("maptiler", "winter", "https://api.maptiler.com/maps/winter-v2/", "xy", ".png", "?key=", "403", "https://maptiler.com")
   ), function(x) data.frame(t(matrix(x)))))
   colnames(basemaps.map_api) <- c("map_service", "map_type", "url_endpoint", "url_xy", "url_file_format", "url_map_token", "auth_error_code", "url_website")
+  basemaps.map_api$http_version <- 0
+  basemaps.map_api[basemaps.map_api$map_service == "osm" & basemaps.map_api$map_type == "topographic", "http_version"] <- 2
   basemaps.map_api$auth_error_code <- as.numeric(basemaps.map_api$auth_error_code)
   options(basemaps.map_api = basemaps.map_api)
   NULL
