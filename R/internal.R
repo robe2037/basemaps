@@ -144,9 +144,9 @@ out <- function(input, type = 1, ll = NULL, msg = FALSE, sign = "", verbose = ge
     ## calculate needed slippy tiles using slippymath
     ext.ll <- st_bbox(st_transform(st_as_sfc(y), crs = st_crs(4326)))
     if(!is.null(custom_zoom)){
-      tg <- bbox_to_tile_grid(ext.ll, zoom=custom_zoom)
+      tg <- suppressWarnings(bbox_to_tile_grid(ext.ll, zoom=custom_zoom))
     } else{
-      tg <- bbox_to_tile_grid(ext.ll, max_tiles = ceiling(map_res*20))
+      tg <- suppressWarnings(bbox_to_tile_grid(ext.ll, max_tiles = ceiling(map_res*20)))
     }
     tg$crs <- st_crs(y)
     tg$map_service <- map_service
