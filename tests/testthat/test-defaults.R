@@ -31,7 +31,7 @@ test_that("get_maptypes()", {
   expect_named(expect_is(df, "data.frame"), c("map_service", "map_type"))
   
   df <- get_maptypes(as_df = T, url_cols = T)
-  expect_equal(ncol(df), 8)
+  expect_equal(ncol(df), 9)
   expect_is(df, "data.frame")
   
   expect_equal(unique(df$map_service), services)
@@ -73,5 +73,5 @@ test_that("save_maptypes()", {
 
 test_that("load_maptypes()", {
   expect_output(load_maptypes(file))
-  expect_equal(ncol(get_maptypes(as_df = T, url_cols = T)), 8)
+  expect_equal(ncol(get_maptypes(as_df = T, url_cols = T)), 9)
 })

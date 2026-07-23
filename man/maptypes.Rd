@@ -35,6 +35,7 @@ add_maptypes(
   url_file_format = ".png",
   url_map_token = as.character(NA),
   auth_error_code = 401,
+  http_version = 0,
   url_website = as.character(NA)
 )
 
@@ -49,21 +50,23 @@ load_maptypes(file)
  \item for \code{add_maptypes()}: character, name of map service the map type to add belongs to
 }}
 
-\item{as_df}{logical, whether to return a data.frame instead of a list (defaults to \code{FALSE})}
+\item{as_df}{logical, whether to return a data.frame instead of a list (defaults to \code{FALSE}).}
 
-\item{url_cols}{logical, whether to include the endpoint URL and auxiliary URL columns (defults to \code{FALSE}). Ignored, if \code{as_df = FALSE}}
+\item{url_cols}{logical, whether to include the endpoint URL and auxiliary URL columns (defults to \code{FALSE}). Ignored, if \code{as_df = FALSE}.}
 
-\item{map_type}{character, name of map type to add}
+\item{map_type}{character, name of map type to add.}
 
-\item{url_endpoint}{character, endpoint URL for map service and type to add}
+\item{url_endpoint}{character, endpoint URL for map service and type to add.}
 
-\item{url_xy}{character, either "xy" or "yx" defining the order the map service to add is expecting tile subscripts in (defaults to "xy")}
+\item{url_xy}{character, either "xy" or "yx" defining the order the map service to add is expecting tile subscripts in (defaults to "xy").}
 
 \item{url_file_format}{character, file format the endpoint to add is using (defaults to ".png").}
 
 \item{url_map_token}{character, optional, request query string used by the endpoint to add for transmitting authentification tokens if required (defaults to \code{NA}). Run \code{get_maptypes(as_df = T, url_cols = T)$url_map_token} for examples.}
 
-\item{auth_error_code}{numeric, http error code the endpoint to add uses if authentification failed (defaults to 401)}
+\item{auth_error_code}{numeric, http error code the endpoint to add uses if authentification failed (defaults to 401).}
+
+\item{http_version}{numeric, optional, HTTP version used by the map service (defaults to 0 for auto setting).}
 
 \item{url_website}{character, optional, website URL for the service to add the user is directed to for registering (defaults to \code{NA}).}
 

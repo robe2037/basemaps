@@ -561,9 +561,11 @@ out <- function(input, type = 1, ll = NULL, msg = FALSE, sign = "", verbose = ge
     c("maptiler", "winter", "https://api.maptiler.com/maps/winter-v2/", "xy", ".png", "?key=", "403", "https://maptiler.com")
   ), function(x) data.frame(t(matrix(x)))))
   colnames(basemaps.map_api) <- c("map_service", "map_type", "url_endpoint", "url_xy", "url_file_format", "url_map_token", "auth_error_code", "url_website")
+  basemaps.map_api$auth_error_code <- as.numeric(basemaps.map_api$auth_error_code)
   basemaps.map_api$http_version <- 0
   basemaps.map_api[basemaps.map_api$map_service == "osm" & basemaps.map_api$map_type == "topographic", "http_version"] <- 2
-  basemaps.map_api$auth_error_code <- as.numeric(basemaps.map_api$auth_error_code)
+  
+  basemaps.map_api <- basemaps.map_api[, c("map_service", "map_type", "url_endpoint", "url_xy", "url_file_format", "url_map_token", "auth_error_code", "http_version", "url_website")]
   options(basemaps.map_api = basemaps.map_api)
   NULL
 }
