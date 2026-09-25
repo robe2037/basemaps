@@ -47,7 +47,7 @@ test_that("basemap()", {
   # test multiple extents (dateline crossing)
   expect_is(basemap_raster(list(ext), map_dir = map_dir, verbose = F), "RasterBrick")
   expect_warning(expect_is(basemap_raster(
-    ext = ext_sc, map_service = "carto", map_type = "light", map_dir = map_dir,
+    ext = ext_sc, map_service = "osm", map_type = "streets", map_dir = map_dir,
     verbose = F, custom_crs = custom_crs), "RasterBrick"
   ))
   

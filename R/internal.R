@@ -414,8 +414,8 @@ out <- function(input, type = 1, ll = NULL, msg = FALSE, sign = "", verbose = ge
 #' @keywords internal
 #' @noRd
 .defaults <- function(){
-  list(map_service = "carto",
-       map_type = "voyager",
+  list(map_service = "osm",
+       map_type = "streets",
        map_res = 1,
        map_token = NA)
 }
