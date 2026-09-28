@@ -69,15 +69,16 @@ reset_defaults <- function(){
 #'  \item for \code{add_maptypes()}: character, name of map service the map type to add belongs to
 #' }
 #'  
-#' @param as_df logical, whether to return a data.frame instead of a list (defaults to \code{FALSE})
-#' @param url_cols logical, whether to include the endpoint URL and auxiliary URL columns (defults to \code{FALSE}). Ignored, if \code{as_df = FALSE}
-#' @param map_type character, name of map type to add
-#' @param url_endpoint character, endpoint URL for map service and type to add
-#' @param url_xy character, either "xy" or "yx" defining the order the map service to add is expecting tile subscripts in (defaults to "xy")
+#' @param as_df logical, whether to return a data.frame instead of a list (defaults to \code{FALSE}).
+#' @param url_cols logical, whether to include the endpoint URL and auxiliary URL columns (defults to \code{FALSE}). Ignored, if \code{as_df = FALSE}.
+#' @param map_type character, name of map type to add.
+#' @param url_endpoint character, endpoint URL for map service and type to add.
+#' @param url_xy character, either "xy" or "yx" defining the order the map service to add is expecting tile subscripts in (defaults to "xy").
 #' @param url_file_format character, file format the endpoint to add is using (defaults to ".png").
 #' @param url_map_token character, optional, request query string used by the endpoint to add for transmitting authentification tokens if required (defaults to \code{NA}). Run \code{get_maptypes(as_df = T, url_cols = T)$url_map_token} for examples.
-#' @param auth_error_code numeric, http error code the endpoint to add uses if authentification failed (defaults to 401)
+#' @param auth_error_code numeric, http error code the endpoint to add uses if authentification failed (defaults to 401).
 #' @param url_website character, optional, website URL for the service to add the user is directed to for registering (defaults to \code{NA}).
+#' @param http_version numeric, optional, HTTP version used by the map service (defaults to 0 for auto setting).
 #' @param file character, file name ending on ".csv" that the map types table is saved to or loaded from.
 #' @param scale character, string used to obtain high-resolution tiles from the map provider, if available. For many map providers this is `"@2x"`. If high-resolution tiles are not avaiable, leave `NA`.
 #' 
@@ -161,7 +162,7 @@ get_maptypes <- function(map_service = NULL, as_df = FALSE, url_cols = FALSE){
 #' @rdname maptypes
 #' @export
 add_maptypes <- function(map_service, map_type, url_endpoint, url_xy = "xy", url_file_format = ".png", 
-                         url_map_token = as.character(NA), auth_error_code = 401, url_website = as.character(NA), scale = NA){
+                         url_map_token = as.character(NA), auth_error_code = 401, http_version = 0, url_website = as.character(NA), scale = NA){
   
   # checks
   if(!is.character(map_service)) out("Argument 'map_service' must be a character.", type = 3)
@@ -172,22 +173,24 @@ add_maptypes <- function(map_service, map_type, url_endpoint, url_xy = "xy", url
   if(!is.character(url_map_token)) out("Argument 'url_map_token' must be a character.", type = 3)
   if(!is.numeric(auth_error_code)) out("Argument 'auth_error_code' must be numeric.", type = 3)
   if(!is.character(url_website)) out("Argument 'url_website' must be a character.", type = 3)
+  if(!is.numeric(http_version)) out("Argument 'http_version' must be a numeric.", type = 3)
   
   if(!all(url_xy %in% c("xy", "yx"))) out("Argument 'url_xy' must only contain 'xy' and/or 'yx'.", type = 3)
   
   if(length(unique(c(length(map_service), length(map_type), length(url_endpoint)))) != 1){
     out("Length of arguments 'map_service', 'map_type' and 'url_endpoint' differ.", type = 3)
   }
-  if(length(unique(length(url_xy), length(url_map_token), length(auth_error_code), length(url_website))) != 1){
-    out("Length of arguments 'url_xy', 'url_map_token', 'auth_error_code' and 'url_website' differ.", type = 3)
+  if(length(unique(length(url_xy), length(url_map_token), length(auth_error_code), length(url_website), length(http_version))) != 1){
+    out("Length of arguments 'url_xy', 'url_map_token', 'auth_error_code', 'url_website' and 'http_version' differ.", type = 3)
   }
   if(length(url_xy) == 1){
     url_xy <- rep(url_xy, length(map_service))
     url_map_token <- rep(url_map_token, length(map_service))
     auth_error_code <- rep(auth_error_code, length(map_service))
     url_website <- rep(url_website, length(map_service))
+    http_version <- rep(http_version, length(map_service))
   } else{
-    if(length(url_xy) != length(map_service)) out("Length of arguments 'url_xy', 'url_map_token', 'auth_error_code' and 'url_website' are different from length of arguments 'map_service', 'map_type' and 'url_endpoint'.", type = 3)
+    if(length(url_xy) != length(map_service)) out("Length of arguments 'url_xy', 'url_map_token', 'auth_error_code', 'url_website' and 'http_version' are different from length of arguments 'map_service', 'map_type' and 'url_endpoint'.", type = 3)
   }
   
   mt_add <- do.call(rbind, lapply(1:length(map_service), function(i){
@@ -200,6 +203,7 @@ add_maptypes <- function(map_service, map_type, url_endpoint, url_xy = "xy", url
       url_file_format = url_file_format[i],
       url_map_token = url_map_token[i],
       auth_error_code = auth_error_code[i],
+      http_version = http_version[i],
       url_website = url_website[i],
       scale = scale[i]
     )
