@@ -1,5 +1,18 @@
 ***
 
+## basemaps 0.1.1
+Minor improvements 
+
+**Bugs:**
+
+* fixed http protocol issue with `map_service="osm"`, `map_type="topographic"`
+* merged PR #35 addressing an issue with the tile ordering of `map_service="esri"`, `map_type="natgeo_world_map"`
+
+<br>
+
+
+***
+
 ## basemaps 0.1.0
 Decreasing dependencies, minor improvements 
 
